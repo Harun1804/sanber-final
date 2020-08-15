@@ -51,8 +51,13 @@
             <div class="container">
                 <p class="lead">{{ $j->isi_jawaban }}</p>
             </div>
-                <i class="lnr lnr lnr-thumbs-up mx-3"><span class="label label-success"> {{ $votejaw::where('jawaban_id',$j->id)->first()->vote_positif }}</span></i>
-                <i class="lnr lnr lnr-thumbs-down mx-3"><span class="label label-danger">{{ $votejaw::where('jawaban_id',$j->id)->first()->vote_negatif }}</span></i>
+            @if ($votejaw == null)
+            <i class="lnr lnr lnr-thumbs-up mx-3"><span class="label label-success">0</span></i>
+            <i class="lnr lnr lnr-thumbs-down mx-3"><span class="label label-danger">0</span></i>
+            @else
+            <i class="lnr lnr lnr-thumbs-up mx-3"><span class="label label-success"> {{ $votejaw->vote_positif }}</span></i>
+            <i class="lnr lnr lnr-thumbs-down mx-3"><span class="label label-danger">{{ $votejaw->vote_negatif }}</span></i>
+            @endif
             @forelse ($komenja::orderby('id','desc')->where('jawaban_id',$j->id)->get() as $jawaban)
             <div class="alert alert-info alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
