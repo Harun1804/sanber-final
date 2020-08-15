@@ -59,10 +59,10 @@ class PertanyaanController extends Controller
     {
         $pertanyaan = Pertanyaan::find($id);
         $vote = Vote_Pertanyaan::where('pertanyaan_id', $id)->first();
-        $cari_jawab = Jawaban::where('pertanyaan_id', $id)->first();
-        $votejaw = Vote_Jawaban::where('jawaban_id', $cari_jawab->id)->first();
+        $votejaw = new Vote_Jawaban;
         $komenpe = KomentarPertanyaan::orderby('id', 'desc')->where('pertanyaan_id', $id)->get();
         $komenja = new KomentarJawaban;
+        $jawab = Jawaban::orderby('id', 'desc')->where('pertanyaan_id', $id)->get();
         return view('pertanyaan.show', compact(['pertanyaan', 'vote', 'komenpe', 'jawab', 'votejaw', 'komenja']));
     }
 
