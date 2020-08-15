@@ -11,8 +11,8 @@
                 <div class="metric">
                     <span class="icon"><i class="lnr lnr-list"></i></span>
                     <p>
-                        <span class="number">#</span>
-                        <a href=" /pertanyaannya">Pertanyaan</a>
+                        <span class="number">{{ $pertanyaan::where('user_id',Auth()->User()->id)->count() }}</span>
+                        <span class="title">Pertanyaan</span>
                         <!-- <span class="title">Pertanyaan</span> -->
                     </p>
                 </div>
@@ -21,12 +21,12 @@
                 <div class="metric">
                     <span class="icon"><i class="lnr lnr-book"></i></span>
                     <p>
-                        <span class="number">#</span>
+                        <span class="number">{{ $jawaban::where('user_id',Auth()->User()->id)->count() }}</span>
                         <span class="title">Jawab</span>
                     </p>
                 </div>
             </div>
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
                 <div class="metric">
                     <span class="icon"><i class="lnr lnr-dice"></i></span>
                     <p>
@@ -34,7 +34,7 @@
                         <span class="title">Point</span>
                     </p>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

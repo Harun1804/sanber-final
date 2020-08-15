@@ -11,9 +11,9 @@
     </div>
     <div class="panel-body no-padding">
         <table class="table table-striped">
-            
+
             <tbody>
-                
+
                 <div class="row">
                     @foreach($forum as $data)
                     <div class="col-md-4">
@@ -35,9 +35,9 @@
                                     @endforelse
                                 </p>
                             </div>
-                            
+
                             <div class="panel-footer">
-                                <a href="{{ url('/ownquestion/'.$data->id) }}" class="btn btn-sm btn-info">Show</a>
+                                <a href="{{ url('/forum/'.$data->id.'/detail') }}" class="btn btn-sm btn-info">Show</a>
                             </div>
                         </div>
                         <!-- END PANEL WITH FOOTER -->
@@ -45,7 +45,7 @@
                     </div>
                     @endforeach
                 </div>
-               
+
             </tbody>
         </table>
     </div>

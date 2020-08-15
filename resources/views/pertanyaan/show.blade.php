@@ -10,7 +10,7 @@
     <div class="panel-body">
         <h3>Pertanyaan</h3>
         <div class="jumbotron">
-            <div >
+            <div>
                 <h3 class="title">{{$pertanyaan->author->name }}</h3>
                 <span class="date">{{$pertanyaan->created_at}}</span>
             </div>
@@ -22,50 +22,57 @@
                 @endforeach
             </p>
             <p>
-                <i class="lnr lnr lnr-thumbs-up mx-3"><span class="label label-success"> 0</span></i>
-                <i class="lnr lnr lnr-thumbs-down mx-3"><span class="label label-danger"> 0</span></i>
+                <i class="lnr lnr lnr-thumbs-up mx-3"><span class="label label-success"> {{ $vote->vote_up }}</span></i>
+                <i class="lnr lnr lnr-thumbs-down mx-3"><span class="label label-danger">
+                        {{ $vote->vote_down }}</span></i>
             </p>
             <hr class="my-4">
-            <form role="form" action="/komentar_pertanyaan" method="POST">
-            @csrf
-                <div class="input-group">
-                 <input class="form-control" placeholder="Komentari Pertanyaan ini" name="komentar_pertanyaan" type="text">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button">Gas!</button>
-                    </span>
-                </div><br>
-            </form>
+            @forelse ($komenpe as $kp)
             <div class="alert alert-info alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                    aria-hidden="true">×</span></button>
-            <label>Nama</label>
-            <i class="fa fa-check-circle">  </i> Komentar Cerita Nya
-        </div>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <label>{{ $kp->user->name }}</label>
+                <i class="fa fa-check-circle"> {{ $kp->isi_komentar }}</i>
+            </div>
+            @empty
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <label></label>
+                <i class="fa fa-check-circle"> Belum Ada Komentar</i>
+            </div>
+            @endforelse
         </div>
     </div>
     <div class="panel-footer">
         <h3>Jawaban</h3>
-        <div class="jumbotron jumbotron-fluid">
-                <div >
-                    <h3 class="title">Nama</h3>
-                    <span class="date">waktu</span>
-                </div><br>
-                <p class="lead">Jawaban</p>
-        </div>
-        <i class="lnr lnr lnr-thumbs-up mx-3"><span class="label label-success"> 0</span></i>
-        <i class="lnr lnr lnr-thumbs-down mx-3"><span class="label label-danger"> 0</span></i>
-        <br><br>
-        <div class="input-group">
-            <input class="form-control" placeholder="Komentari Jawaban ini" name="komentar_jawaban" type="text">
-            <span class="input-group-btn">
-                <button class="btn btn-primary" type="button">Gas!</button>
-            </span>
-            </div><br>
-        <div class="alert alert-info alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                    aria-hidden="true">×</span></button>
-            <label>Nama</label>
-            <i class="fa fa-check-circle">  </i> Komentar Cerita Nya
+                <div class="jumbotron jumbotron-fluid">
+            @forelse ($jawab as $j)
+            <div class="container">
+                <p class="lead">{{ $j->isi_jawaban }}</p>
+            </div>
+                <i class="lnr lnr lnr-thumbs-up mx-3"><span class="label label-success"> {{ $votejaw::where('jawaban_id',$j->id)->first()->vote_positif }}</span></i>
+                <i class="lnr lnr lnr-thumbs-down mx-3"><span class="label label-danger">{{ $votejaw::where('jawaban_id',$j->id)->first()->vote_negatif }}</span></i>
+            @forelse ($komenja::orderby('id','desc')->where('jawaban_id',$j->id)->get() as $jawaban)
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <label>{{ $jawaban->user->name }}</label>
+                <i class="fa fa-check-circle"> {{ $jawaban->isi_komentar }}</i>
+            </div>
+            @empty
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <label></label>
+                <i class="fa fa-check-circle"> Tidak Ada Komentar</i>
+            </div>
+            @endforelse
+            @empty
+            <div class="container">
+                <p class="lead">Belum Ada Jawaban</p>
+            </div>
+            @endforelse
         </div>
         <div class="row">
             <div class="col-md-6"><span class="panel-note"></span></div>
